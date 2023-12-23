@@ -60,11 +60,12 @@ class IndicatorRSI:
         for i in range(len(self.closure_value)):
             current_value = self.closure_value.iloc[i]
 
-            if current_value <= self.BUY_THRESHOLD:
+            if current_value < self.BUY_THRESHOLD:
                 self.suggestions.append('BUY')
-            elif current_value >= self.SELL_THRESHOLD:
+            elif current_value > self.SELL_THRESHOLD:
                 self.suggestions.append('SELL')
-
+            else:
+                self.suggestions.append('HOLD')
 
 class IndicatorMACD:
     """
@@ -143,7 +144,6 @@ class IndicatorSTOCH:
                 self.suggestions.append('BUY')
             else:
                 self.suggestions.append('HOLD')
-
 
 
 class IndicatorSMA:

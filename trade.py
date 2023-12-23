@@ -67,6 +67,7 @@ class IndicatorRSI:
             else:
                 self.suggestions.append('HOLD')
 
+
 class IndicatorMACD:
     """
     Moving Average Convergence/Divergence Indicator
@@ -157,12 +158,28 @@ class IndicatorSMA:
     return: None
     """
 
-    def __init__(self, closure_value: pd.DataFrame, timeperiod: int) ->None:
+    def __init__(self, closure_value: pd.DataFrame, short_sma_timeperiod: int, long_sma_timeperiod: int) ->None:
         self.closure_value = closure_value
-        self.timeperiod = timeperiod
+        self.short_sma_timeperiod = short_sma_timeperiod
+        self.long_sma_timeperiod = long_sma_timeperiod
+        self.suggestions = []
 
-        self.sma = ta.SMA(real=self.closure_value, timeperiod=self.timeperiod)
+        self.short_sma_values = ta.SMA(real=self.closure_value, timeperiod=self.short_sma_timeperiod)
+
+        self.long_sma_values = ta.SMA(real=self.closure_value, timeperiod=self.long_sma_timeperiod)
+
+        self.short_sma_shift_values = self.short_sma_values.shift(1)
+        self.long_sma_shift_values = self.long_sma_values.shift(1)
+
     
+        for short_sma, long_sma, short_sma_shift, long_sma_shift in zip(self.short_sma_values, self.long_sma_values, self.short_sma_shift_values, self.long_sma_shift_values):
+            if (short_sma > long_sma) and (short_sma_shift <= long_sma_shift):
+                self.suggestions.append('BUY')
+            elif (short_sma < long_sma) and (short_sma_shift >= long_sma_shift):
+                self.suggestions.append('SELL')
+            else:
+                self.suggestions.append('HOLD')
+
 
 class IndicatorEMA:
     """

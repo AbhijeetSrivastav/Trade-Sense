@@ -8,7 +8,6 @@ from trade import IndicatorEMA
 from trade import GenerateAlert
 from trade import PushAlert
 
-
 # CONFIGURABLE PARAMETERS
 SYMBOL = 'Reliance.NS'
 PERIOD_FOR_DATA_COLLECTION = '2y'

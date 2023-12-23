@@ -237,7 +237,6 @@ class IndicatorEMA:
         return self.suggestions, ["EMA Short:" + str(round(short_ema, 2)) + " | " + "LONG EMA:" + str(round(long_ema, 2)) for short_ema, long_ema in zip(self.short_ema_values, self.long_ema_values)]
 
 
-
 class GenerateAlert:
     """
     Generate Alert is responsible to generate alert based on Indicator 

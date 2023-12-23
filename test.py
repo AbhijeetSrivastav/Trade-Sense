@@ -3,6 +3,7 @@ from trade import DataFetcher
 from trade import IndicatorRSI
 from trade import IndicatorMACD
 from trade import IndicatorSMA
+from trade import IndicatorEMA
 
 # CONFIGURABLE PARAMETERS
 SYMBOL = 'TATAMOTORS.NS'
@@ -33,9 +34,5 @@ macd_values = IndicatorMACD(closure_value=closure_values, fastperiod=FAST_PERIOD
 #>> SMA
 sma_values = IndicatorSMA(closure_value=closure_values, timeperiod=TIMEPERIOD).sma
 
-
-
-
-
-
-
+#>> EMA
+ema_values = IndicatorEMA(closure_value=closure_values, timeperiod=TIMEPERIOD).ema

@@ -55,7 +55,7 @@ class IndicatorRSI:
         self.BUY_THRESHOLD = 30
         self.SELL_THRESHOLD = 70
 
-    def cal_suggestions(self):
+    def cal_suggestions(self)->tuple:
         "Calculate suggestions"
         self.rsi = ta.RSI(real=self.closure_value, timeperiod=self.period)
 

@@ -33,7 +33,7 @@ class DataFetcher:
         except Exception as e:
             raise Exception(e)
                 
-        return data["Close"]
+        return data, data["Close"]
 
 
 class IndicatorRSI:

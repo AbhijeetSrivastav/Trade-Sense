@@ -83,10 +83,36 @@ class IndicatorMACD:
         self.closure_value = closure_value
         self.fastperiod = fastperiod
         self.slowperiod = slowperiod
-        self.signalperiod = signalperiod
+        self.signalperiod = signalperiod    
+        self.suggestions = []
 
-        # macd returns three series macd, signal, macd_hist(we are using signal)(.drop(columns=[0, 2], axis=1))
-        self.macd = pd.DataFrame(ta.MACD(real=self.closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod, signalperiod=self.signalperiod)).T[1]
+        # ta.macd returns three series macd, signal, macd_hist
+        self.macd_values, self.signal_values, self.macd_hist_values = ta.MACD(real=closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod, signalperiod=self.signalperiod)
+
+      
+        # SIGNAL LOGIC: A
+        '''
+        If MACD_HIST CROSSES 0 then Buy else Sell
+        '''
+        for macd_hist in self.macd_hist_values:
+            if macd_hist > 0:
+                self.suggestions.append('BUY')
+            else:
+                self.suggestions.append('Sell')
+
+        # # SIGNAL LOGIC: B
+        # '''
+        # If MACD > SIGNAL then Buy else Sell
+        # # '''
+        # for macd, signal in zip(self.macd_values, self.signal_values):
+        #     if macd > signal:
+        #         self.suggestions.append('BUY')
+        #     else:
+        #         self.suggestions.append('SELL')
+        
+
+
+        
     
 
 class IndicatorSTOCH:

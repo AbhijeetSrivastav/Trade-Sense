@@ -62,17 +62,18 @@ class IndicatorMACD:
     - `closure_value`: array or pandas series containing closing prices
     - `fastperiod`: period for faster moving EMA
     - `slowperiod`: period for slow moving EMA
+    - `signalperiod`: signal period for moving EMA
     -----------------------------------------------------------------
-    return: Pandas Series containing MACD values
+    return: return None
     """
 
-    def __init__(self, closure_value: pd.DataFrame, fastperiod: int, slowperiod: int, signalperiod: int) -> pd.Series:
+    def __init__(self, closure_value: pd.DataFrame, fastperiod: int, slowperiod: int, signalperiod: int) -> None:
         self.closure_value = closure_value
         self.fastperiod = fastperiod
         self.slowperiod = slowperiod
         self.signalperiod = signalperiod
 
-        return ta.MACD(real=self.closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod, signalperiod=self.signalperiod) 
+        self.macd = ta.MACD(real=self.closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod, signalperiod=self.signalperiod) 
     
 
 class IndicatorSTOCH:

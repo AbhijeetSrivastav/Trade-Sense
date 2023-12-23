@@ -195,7 +195,7 @@ class IndicatorSMA:
             else:
                 self.suggestions.append('HOLD')
         
-        return self.suggestions, ["SMA Short:" + str(round(short_sma, 2)) + " | " + "LONG SMA:" + str(round(long_sma, 2)) for sma_short, long_sma in zip(self.short_sma_values, self.long_sma_values)]
+        return self.suggestions, ["SMA Short:" + str(round(short_sma, 2)) + " | " + "LONG SMA:" + str(round(long_sma, 2)) for short_sma, long_sma in zip(self.short_sma_values, self.long_sma_values)]
 
 
 class IndicatorEMA:

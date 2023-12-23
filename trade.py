@@ -232,20 +232,13 @@ class PushAlert:
         Push alert message via required mode
         ---------------------------------------------------------------
         input:
-        - `alert_message`: alert message to push
-        - `push_mode`: alert mode, default Console
+        - `alert_messages`: alert messages to push
         ----------------------------------------------------------------
         return: None
         """
     
-    def __init__(self, alert_messages: str, push_mode: str = "Console") -> None:
-        self.alert_message = alert_messages
-        self.push_mode = push_mode
-
-        if push_mode == "Console":
-            self.pushConsole:()
-        else: 
-            pass
+    def __init__(self, alert_messages: list) -> None:
+        self.alert_messages = alert_messages
     
     def pushConsole(self):
         """
@@ -254,4 +247,4 @@ class PushAlert:
         return: None
         """
         for i in range(len(self.alert_messages)):
-            print(self.alert_message)
+            print('>>  '+ self.alert_messages[i])

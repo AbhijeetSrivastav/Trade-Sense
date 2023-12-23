@@ -66,12 +66,13 @@ class IndicatorMACD:
     return: Pandas Series containing MACD values
     """
 
-    def __init__(self, closure_value: pd.DataFrame, fastperiod: int, slowperiod: int) -> pd.Series:
+    def __init__(self, closure_value: pd.DataFrame, fastperiod: int, slowperiod: int, signalperiod: int) -> pd.Series:
         self.closure_value = closure_value
         self.fastperiod = fastperiod
         self.slowperiod = slowperiod
+        self.signalperiod = signalperiod
 
-        return ta.MACD(real=self.closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod) 
+        return ta.MACD(real=self.closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod, signalperiod=self.signalperiod) 
     
 
 class IndicatorSTOCH:

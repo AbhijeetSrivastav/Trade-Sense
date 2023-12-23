@@ -1,6 +1,6 @@
 
 from trade import DataFetcher
-
+from trade import IndicatorRSI
 
 
 # CONFIGURABLE PARAMETERS
@@ -22,8 +22,11 @@ TIMEPERIOD = 50
 historical_data, closure_values = DataFetcher(symbol=SYMBOL, period=PERIOD_FOR_DATA_COLLECTION, interval=INTERVAL).fetchClosureHistoryData()
 
 
+# INDICATOR CALCULATION
+# >> RSI
+rsi_values = IndicatorRSI(closure_value=closure_values, period=PERIOD_FOR_CALCULATION).rsi
 
-    
+
 
 
 

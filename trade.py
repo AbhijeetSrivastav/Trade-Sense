@@ -50,9 +50,21 @@ class IndicatorRSI:
     def __init__(self, closure_value: pd.DataFrame, period: int) -> None:
         self.closure_value = closure_value
         self.period = period
-    
+        self.suggestions = []
+
+        self.BUY_THRESHOLD = 30
+        self.SELL_THRESHOLD = 70
+
         self.rsi = ta.RSI(real=self.closure_value, timeperiod=self.period)
-  
+
+        for i in range(len(self.closure_value)):
+            current_value = self.closure_value.iloc[i]
+
+            if current_value <= self.BUY_THRESHOLD:
+                self.suggestions.append('BUY')
+            elif current_value >= self.SELL_THRESHOLD:
+                self.suggestions.append('SELL')
+
 
 class IndicatorMACD:
     """
@@ -74,7 +86,7 @@ class IndicatorMACD:
         self.signalperiod = signalperiod
 
         # macd returns three series macd, signal, macd_hist(we are using signal)(.drop(columns=[0, 2], axis=1))
-        self.macd = pd.DataFrame(ta.MACD(real=self.closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod, signalperiod=self.signalperiod)).T
+        self.macd = pd.DataFrame(ta.MACD(real=self.closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod, signalperiod=self.signalperiod)).T[1]
     
 
 class IndicatorSTOCH:
@@ -210,19 +222,34 @@ class GenerateAlert:
 
         messages = []
 
+        j = 0
+        w = 0
+        s = 0
+
         for i in range(1, len(self.indicator_values)):
             previous_value = self.indicator_values.iloc[i-1]
             current_value = self.indicator_values.iloc[i]
             current_date = self.historical_data.index[i].strftime("%Y-%m-%d")
+
+            
             
             if current_value <= self.BUY_THRESHOLD and previous_value > self.BUY_THRESHOLD:
                 message = "Signal: BUY | Indicator: {0} | Indicator Value: {1} On Date: {2}".format(self.indicator, current_value, current_date)
                 messages.append(message)
+                print('i am here', j)
+                j = j +1
+                
             
             elif current_value >= self.SELL_THRESHOLD and previous_value < self.SELL_THRESHOLD:
                 message = "Signal: SELL | Indicator: {0} | Indicator Value: {1} On Date: {2}".format(self.indicator, current_value, current_date)
                 messages.append(message)
-                    
+                print('i am here', w)
+                w = w +1
+            else:
+                print('i am here', s)
+                s = s +1
+        
+        print(j, w, s)
         return messages
     
 

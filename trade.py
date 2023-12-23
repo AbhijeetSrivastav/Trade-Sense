@@ -176,6 +176,9 @@ class IndicatorSMA:
         self.long_sma_timeperiod = long_sma_timeperiod
         self.suggestions = []
 
+
+    def cal_suggestions(self)->tuple:
+        "Calculate suggestions"
         self.short_sma_values = ta.SMA(real=self.closure_value, timeperiod=self.short_sma_timeperiod)
 
         self.long_sma_values = ta.SMA(real=self.closure_value, timeperiod=self.long_sma_timeperiod)
@@ -191,6 +194,8 @@ class IndicatorSMA:
                 self.suggestions.append('SELL')
             else:
                 self.suggestions.append('HOLD')
+        
+        return self.suggestions, ["SMA Short:" + str(round(short_sma, 2)) + " | " + "LONG SMA:" + str(round(long_sma, 2)) for sma_short, long_sma in zip(self.short_sma_values, self.long_sma_values)]
 
 
 class IndicatorEMA:

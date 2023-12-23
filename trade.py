@@ -44,7 +44,7 @@ class IndicatorRSI:
     - `closure_value`: array or pandas series containing closing prices
     - `timeperiod`: period over which to calculate the ema
     -----------------------------------------------------------------
-    return: Pandas Series containing RSA values
+    return: None
     """
 
     def __init__(self, closure_value: pd.DataFrame, period: int) -> None:

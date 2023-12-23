@@ -2,6 +2,7 @@
 from trade import DataFetcher
 from trade import IndicatorRSI
 from trade import IndicatorMACD
+from trade import IndicatorSTOCH
 from trade import IndicatorSMA
 from trade import IndicatorEMA
 
@@ -21,7 +22,7 @@ TIMEPERIOD = 50
 
 
 # HISTORICAL DATA COLLECTION
-historical_data, closure_values = DataFetcher(symbol=SYMBOL, period=PERIOD_FOR_DATA_COLLECTION, interval=INTERVAL).fetchClosureHistoryData()
+historical_data, closure_values, low_values, high_values = DataFetcher(symbol=SYMBOL, period=PERIOD_FOR_DATA_COLLECTION, interval=INTERVAL).fetchClosureHistoryData()
 
 
 # INDICATOR CALCULATION
@@ -31,8 +32,12 @@ rsi_values = IndicatorRSI(closure_value=closure_values, period=PERIOD_FOR_CALCUL
 #>> MACD
 macd_values = IndicatorMACD(closure_value=closure_values, fastperiod=FAST_PERIOD, slowperiod=SLOW_PERIOD, signalperiod=SIGNAL_PERIOD).macd
 
+#>> STOCH
+stoch_values = IndicatorSTOCH(closure_value=closure_values, low_values=low_values, high_values=high_values, kperiod=K_PERIOD, dperiod=D_PERIOD, lookback=LOOKBACK).stoch
+
 #>> SMA
 sma_values = IndicatorSMA(closure_value=closure_values, timeperiod=TIMEPERIOD).sma
 
 #>> EMA
 ema_values = IndicatorEMA(closure_value=closure_values, timeperiod=TIMEPERIOD).ema
+

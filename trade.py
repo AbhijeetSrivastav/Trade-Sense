@@ -123,14 +123,14 @@ class IndicatorEMA:
     - `closure_value`: array or pandas series containing closing prices
     - `timeperiod`: period over which to calculate the ema
     -----------------------------------------------------------------
-    return: Pandas Series containing EMA values
+    return: None
     """
 
     def __init__(self, closure_value: pd.DataFrame, timeperiod: int) -> pd.Series:
         self.closure_value = closure_value
         self.timeperiod = timeperiod
 
-        return ta.EMA(real=self.closure_value, timeperiod=self.timeperiod)
+        self.ema = ta.EMA(real=self.closure_value, timeperiod=self.timeperiod)
 
 
 class GenerateAlert:

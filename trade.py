@@ -47,11 +47,11 @@ class IndicatorRSI:
     return: Pandas Series containing RSA values
     """
 
-    def __init__(self, closure_value: pd.DataFrame, period: int) -> pd.Series:
+    def __init__(self, closure_value: pd.DataFrame, period: int) -> None:
         self.closure_value = closure_value
         self.period = period
     
-        return ta.RSI(real=self.closure_value, timeperiod=self.period)
+        self.rsi = ta.RSI(real=self.closure_value, timeperiod=self.period)
   
 
 class IndicatorMACD:

@@ -111,3 +111,21 @@ class IndicatorSMA:
         self.timeperiod = timeperiod
 
         return ta.SMA(real=self.closure_value, timeperiod=self.timeperiod)
+    
+
+class IndicatorEMA:
+    """
+    Exponential Moving Average Indicator
+    -----------------------------------------------------------------
+    input:
+    - `closure_value`: array or pandas series containing closing prices
+    - `timeperiod`: period over which to calculate the ema
+    -----------------------------------------------------------------
+    return: Pandas Series containing EMA values
+    """
+
+    def __init__(self, closure_value: pd.DataFrame, timeperiod: int) -> pd.Series:
+        self.closure_value = closure_value
+        self.timeperiod = timeperiod
+
+        return ta.EMA(real=self.closure_value, timeperiod=self.timeperiod)

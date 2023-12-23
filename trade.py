@@ -210,3 +210,32 @@ class GenerateAlert:
                 message = "Signal: SELL | Indicator: {0} | Indicator Value: {1} On Date: {2}".format(self.indicator, current_value, current_date)
         
         return message
+    
+
+class PushAlert:
+    """
+        Push alert message via required mode
+        ---------------------------------------------------------------
+        input:
+        - `alert_message`: alert message to push
+        - `push_mode`: alert mode, default Console
+        ----------------------------------------------------------------
+        return: None
+        """
+    
+    def __init__(self, alert_message: str, push_mode: str = "Console") -> None:
+        self.alert_message = alert_message
+        self.push_mode = push_mode
+
+        if push_mode == "Console":
+            self.pushConsole:()
+        else: 
+            pass
+    
+    def pushConsole(self):
+        """
+        Push alert to console
+        ----------------------------------------------------------------
+        return: None
+        """
+        print(self.alert_message)

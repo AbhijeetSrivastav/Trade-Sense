@@ -95,7 +95,8 @@ class IndicatorMACD:
         # ta.macd returns three series macd, signal, macd_hist
         self.macd_values, self.signal_values, self.macd_hist_values = ta.MACD(real=closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod, signalperiod=self.signalperiod)
 
-      
+    def cal_suggestions(self)->tuple:
+        "Calculate suggestions"
         # SIGNAL LOGIC: A
         '''
         If MACD_HIST CROSSES 0 then Buy else Sell
@@ -115,6 +116,8 @@ class IndicatorMACD:
         #         self.suggestions.append('BUY')
         #     else:
         #         self.suggestions.append('SELL')
+        
+        return self.suggestions, self.macd_hist_values
           
     
 class IndicatorSTOCH:

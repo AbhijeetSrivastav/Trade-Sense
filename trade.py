@@ -93,3 +93,21 @@ class IndicatorSTOCH:
         self.lookback = lookback
 
         return ta.STOCH(close=self.closure_value, kperiod=self.kperiod, dperiod=self.dperiod, lookback=self.lookback)
+    
+
+class IndicatorSMA:
+    """
+    Simple Moving Average Indicator
+    -----------------------------------------------------------------
+    input:
+    - `closure_value`: array or pandas series containing closing prices
+    - `timeperiod`: period over which to calculate the sma
+    -----------------------------------------------------------------
+    return: Pandas Series containing SMA values
+    """
+
+    def __init__(self, closure_value: pd.DataFrame, timeperiod: int) -> pd.Series:
+        self.closure_value = closure_value
+        self.timeperiod = timeperiod
+
+        return ta.SMA(real=self.closure_value, timeperiod=self.timeperiod)

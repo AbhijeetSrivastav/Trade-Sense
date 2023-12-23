@@ -187,16 +187,33 @@ class IndicatorEMA:
     -----------------------------------------------------------------
     input:
     - `closure_value`: array or pandas series containing closing prices
-    - `timeperiod`: period over which to calculate the ema
+    - `short_ema_timeperiod`: period over which to calculate the ema shorter
+    - `long_ema_timeperiod`: period over which to calculate the ema longer
     -----------------------------------------------------------------
     return: None
     """
 
-    def __init__(self, closure_value: pd.DataFrame, timeperiod: int) ->None:
+    def __init__(self, closure_value: pd.DataFrame, short_ema_timeperiod: int, long_ema_timeperiod: int) ->None:
         self.closure_value = closure_value
-        self.timeperiod = timeperiod
+        self.short_ema_timeperiod = short_ema_timeperiod
+        self.long_ema_timeperiod = long_ema_timeperiod
+        self.suggestions = []
 
-        self.ema = ta.EMA(real=self.closure_value, timeperiod=self.timeperiod)
+        self.short_ema_values = ta.EMA(real=self.closure_value, timeperiod=self.short_ema_timeperiod)
+
+        self.long_ema_values = ta.EMA(real=self.closure_value, timeperiod=self.long_ema_timeperiod)
+
+        self.short_ema_shift_values = self.short_ema_values.shift(1)
+        self.long_ema_shift_values = self.long_ema_values.shift(1)
+        self.closure_shift_values = self.closure_value.shift(1)
+    
+        for short_ema, long_ema, short_ema_shift, long_ema_shift, close, close_shift in zip(self.short_ema_values, self.long_ema_values, self.short_ema_shift_values, self.long_ema_shift_values, self.closure_value, self.closure_shift_values):
+            if (short_ema > long_ema) and (short_ema_shift <= long_ema_shift):
+                self.suggestions.append('BUY')
+            elif (close < short_ema) and (close_shift >= short_ema_shift):
+                self.suggestions.append('SELL')
+            else:
+                self.suggestions.append('HOLD')
 
 
 class GenerateAlert:

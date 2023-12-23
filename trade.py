@@ -72,3 +72,24 @@ class IndicatorMACD:
         self.slowperiod = slowperiod
 
         return ta.MACD(real=self.closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod) 
+    
+
+class IndicatorSTOCH:
+    """
+    Stochastic Oscillator Indicator
+    -----------------------------------------------------------------
+    input:
+    - `closure_value`: array or pandas series containing closing prices
+    - `kperiod`: period used to calculate the %K line, representing the current price relative to the highest high and lowest low within the period
+    - `dperiod`: period used to calculate the %D line, which is a moving average of the %K line
+    - `lookback`: starting point for calculating the highest high and lowest low used in the %K calculation
+    -----------------------------------------------------------------
+    return: Pandas Series containing STOCH values
+    """
+    def __init__(self, closure_value: pd.DataFrame, kperiod: int, dperiod: int, lookback: int) -> pd.Series:
+        self.closure_value = closure_value
+        self.kperiod = kperiod
+        self.dperiod = dperiod
+        self.lookback = lookback
+
+        return ta.STOCH(close=self.closure_value, kperiod=self.kperiod, dperiod=self.dperiod, lookback=self.lookback)

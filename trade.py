@@ -88,13 +88,15 @@ class IndicatorSTOCH:
     -----------------------------------------------------------------
     return: None
     """
-    def __init__(self, closure_value: pd.DataFrame, kperiod: int, dperiod: int, lookback: int) -> None:
+    def __init__(self, closure_value: pd.DataFrame, low_values: pd.DataFrame, high_values: pd.DataFrame, kperiod: int, dperiod: int, lookback: int) -> None:
         self.closure_value = closure_value
+        self.low_values = low_values
+        self.high_values = high_values
         self.kperiod = kperiod
         self.dperiod = dperiod
         self.lookback = lookback
 
-        self.stoch = ta.STOCH(self.closure_value, self.kperiod, self.dperiod, self.lookback)
+        self.stoch = ta.STOCH(self.closure_value, self.low_values, self.high_values, self.kperiod, self.dperiod, self.lookback)
     
 
 class IndicatorSMA:

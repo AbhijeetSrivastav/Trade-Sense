@@ -73,7 +73,8 @@ class IndicatorMACD:
         self.slowperiod = slowperiod
         self.signalperiod = signalperiod
 
-        self.macd = ta.MACD(real=self.closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod, signalperiod=self.signalperiod) 
+        # macd returns three series macd, signal, macd_hist(we are using signal)(.drop(columns=[0, 2], axis=1))
+        self.macd = pd.DataFrame(ta.MACD(real=self.closure_value, fastperiod=self.fastperiod, slowperiod=self.slowperiod, signalperiod=self.signalperiod)).T
     
 
 class IndicatorSTOCH:

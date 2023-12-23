@@ -238,8 +238,8 @@ class PushAlert:
         return: None
         """
     
-    def __init__(self, alert_message: str, push_mode: str = "Console") -> None:
-        self.alert_message = alert_message
+    def __init__(self, alert_messages: str, push_mode: str = "Console") -> None:
+        self.alert_message = alert_messages
         self.push_mode = push_mode
 
         if push_mode == "Console":
@@ -253,4 +253,5 @@ class PushAlert:
         ----------------------------------------------------------------
         return: None
         """
-        print(self.alert_message)
+        for i in range(len(self.alert_messages)):
+            print(self.alert_message)

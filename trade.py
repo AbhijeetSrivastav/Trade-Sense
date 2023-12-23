@@ -86,15 +86,15 @@ class IndicatorSTOCH:
     - `dperiod`: period used to calculate the %D line, which is a moving average of the %K line
     - `lookback`: starting point for calculating the highest high and lowest low used in the %K calculation
     -----------------------------------------------------------------
-    return: Pandas Series containing STOCH values
+    return: None
     """
-    def __init__(self, closure_value: pd.DataFrame, kperiod: int, dperiod: int, lookback: int) -> pd.Series:
+    def __init__(self, closure_value: pd.DataFrame, kperiod: int, dperiod: int, lookback: int) -> None:
         self.closure_value = closure_value
         self.kperiod = kperiod
         self.dperiod = dperiod
         self.lookback = lookback
 
-        return ta.STOCH(close=self.closure_value, kperiod=self.kperiod, dperiod=self.dperiod, lookback=self.lookback)
+        self.stoch = ta.STOCH(close=self.closure_value, kperiod=self.kperiod, dperiod=self.dperiod, lookback=self.lookback)
     
 
 class IndicatorSMA:

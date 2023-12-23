@@ -143,6 +143,8 @@ class IndicatorSTOCH:
         self.SELL_THRESHOLD = 80
         self.suggestions = []
 
+    def cal_suggestions(self)->tuple:
+        "Calculate suggestions"
         self.k_values, self.d_values,  = ta.STOCH(self.closure_value, self.low_values, self.high_values, self.kperiod, self.dperiod, self.lookback)
 
         for k, d in zip(self.k_values, self.d_values):
@@ -152,6 +154,8 @@ class IndicatorSTOCH:
                 self.suggestions.append('BUY')
             else:
                 self.suggestions.append('HOLD')
+        
+        return self.suggestions, self.k_values
 
 
 class IndicatorSMA:
@@ -237,12 +241,11 @@ class GenerateAlert:
     return: alerts
     """
 
-    def __init__(self, indicator: str, indicator_suggestions: list, indicator_values: list, historical_data: pd.DataFrame, symbol: str, debug: bool = False) -> str:
+    def __init__(self, indicator: str, indicator_suggestions: list, indicator_values: list, historical_data: pd.DataFrame) -> str:
         self.indicator = indicator
         self.indicator_suggestions = indicator_suggestions
         self.indicator_values = indicator_values
         self.historical_data = historical_data
-        self.symbol = symbol
         self.alerts = []
 
         for suggestion, date, indicator_value in zip(self.indicator_suggestions,[self.historical_data["Close"].index[i].strftime("%Y-%m-%d") for i in range(len(self.indicator_values))], self.indicator_values):

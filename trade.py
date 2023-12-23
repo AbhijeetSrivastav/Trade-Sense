@@ -216,6 +216,8 @@ class IndicatorEMA:
         self.long_ema_timeperiod = long_ema_timeperiod
         self.suggestions = []
 
+    def cal_suggestions(self)->tuple:
+        "Calculate suggestions"
         self.short_ema_values = ta.EMA(real=self.closure_value, timeperiod=self.short_ema_timeperiod)
 
         self.long_ema_values = ta.EMA(real=self.closure_value, timeperiod=self.long_ema_timeperiod)
@@ -231,6 +233,9 @@ class IndicatorEMA:
                 self.suggestions.append('SELL')
             else:
                 self.suggestions.append('HOLD')
+        
+        return self.suggestions, ["EMA Short:" + str(round(short_ema, 2)) + " | " + "LONG EMA:" + str(round(long_ema, 2)) for short_ema, long_ema in zip(self.short_ema_values, self.long_ema_values)]
+
 
 
 class GenerateAlert:

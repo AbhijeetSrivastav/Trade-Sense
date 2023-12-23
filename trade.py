@@ -109,12 +109,8 @@ class IndicatorMACD:
         #         self.suggestions.append('BUY')
         #     else:
         #         self.suggestions.append('SELL')
-        
-
-
-        
+          
     
-
 class IndicatorSTOCH:
     """
     Stochastic Oscillator Indicator
@@ -134,9 +130,21 @@ class IndicatorSTOCH:
         self.kperiod = kperiod
         self.dperiod = dperiod
         self.lookback = lookback
+        self.BUY_THRESHOLD = 20
+        self.SELL_THRESHOLD = 80
+        self.suggestions = []
 
-        self.stoch = ta.STOCH(self.closure_value, self.low_values, self.high_values, self.kperiod, self.dperiod, self.lookback)
-    
+        self.k_values, self.d_values,  = ta.STOCH(self.closure_value, self.low_values, self.high_values, self.kperiod, self.dperiod, self.lookback)
+
+        for k, d in zip(self.k_values, self.d_values):
+            if k > self.SELL_THRESHOLD and d > self.SELL_THRESHOLD:
+                self.suggestions.append('SELL')
+            elif k < self.BUY_THRESHOLD and d < self.BUY_THRESHOLD:
+                self.suggestions.append('BUY')
+            else:
+                self.suggestions.append('HOLD')
+
+
 
 class IndicatorSMA:
     """

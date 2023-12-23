@@ -33,7 +33,7 @@ class DataFetcher:
         except Exception as e:
             raise Exception(e)
                 
-        return data, data["Close"]
+        return data, data["Close"], data["Low"], data["High"]
 
 
 class IndicatorRSI:
@@ -94,7 +94,7 @@ class IndicatorSTOCH:
         self.dperiod = dperiod
         self.lookback = lookback
 
-        self.stoch = ta.STOCH(close=self.closure_value, kperiod=self.kperiod, dperiod=self.dperiod, lookback=self.lookback)
+        self.stoch = ta.STOCH(self.closure_value, self.kperiod, self.dperiod, self.lookback)
     
 
 class IndicatorSMA:
@@ -126,7 +126,7 @@ class IndicatorEMA:
     return: None
     """
 
-    def __init__(self, closure_value: pd.DataFrame, timeperiod: int) -> pd.Series:
+    def __init__(self, closure_value: pd.DataFrame, timeperiod: int) ->None:
         self.closure_value = closure_value
         self.timeperiod = timeperiod
 

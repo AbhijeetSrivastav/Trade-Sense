@@ -155,6 +155,7 @@ class GenerateAlert:
         self.historical_data = historical_data
         self.symbol = symbol
         self.debug = debug
+        self.alert_messages = None
 
         # >>>>CONFIGURING THRESHOLD
         if indicator == "SMA" or indicator == "EMA":
@@ -167,9 +168,9 @@ class GenerateAlert:
         
         # >>>>Calling Alert Generators
         if debug is True:
-            return self.genAlertBackTesting()
+            self.alert_messages = self.genAlertBackTesting()
         else:
-            return self.genAlertDeploy()
+            self.alert_messages = self.genAlertDeploy()
 
     def genAlertBackTesting(self):
         """

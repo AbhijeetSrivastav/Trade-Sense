@@ -178,20 +178,25 @@ class GenerateAlert:
         ------------
         - Gives alert for each day in historical data
         ----------------------------------------------------------------
-        return: alert message
+        return: list of alert messages
         """
+
+        messages = []
 
         for i in range(len(self.indicator_values)):
             current_value = self.indicator_values.iloc[i]
             current_date = self.historical_data["Close"].index[i].strftime("%Y=-%m-%d")
+            message = ""
 
             if current_value <= self.BUY_THRESHOLD:
                 message = "Signal: BUY | Indicator: {0} | Indicator Value: {1} On Date: {2}".format(self.indicator, current_value, current_date)
             
             elif current_value >= self.SELL_THRESHOLD:
                 message = "Signal: SELL | Indicator: {0} | Indicator Value: {1} On Date: {2}".format(self.indicator, current_value, current_date)
+            
+            messages.append(message)
 
-        return message
+        return messages
 
     def genAlertDeploy(self):
         """
@@ -200,21 +205,26 @@ class GenerateAlert:
         - Gives alert with reduced frequency via an applied filter
         - Other options: (cooling period, combining indicators: not implemented)
         ----------------------------------------------------------------
-        return: alert message
+        return: list of alert message
         """
+
+        messages = []
 
         for i in range(1, len(self.indicator_values)):
             previous_value = self.indicator_values.iloc[i-1]
             current_value = self.indicator_values.iloc[i]
             current_date = self.historical_data.index[i].strftime("%Y-%m-%d")
+            message = ""
             
             if current_value <= self.BUY_THRESHOLD and previous_value > self.BUY_THRESHOLD:
                 message = "Signal: BUY | Indicator: {0} | Indicator Value: {1} On Date: {2}".format(self.indicator, current_value, current_date)
             
             elif current_value >= self.SELL_THRESHOLD and previous_value < self.SELL_THRESHOLD:
                 message = "Signal: SELL | Indicator: {0} | Indicator Value: {1} On Date: {2}".format(self.indicator, current_value, current_date)
+            
+            messages.append(message)
         
-        return message
+        return messages
     
 
 class PushAlert:

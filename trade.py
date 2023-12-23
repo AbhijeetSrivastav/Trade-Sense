@@ -153,7 +153,8 @@ class IndicatorSMA:
     -----------------------------------------------------------------
     input:
     - `closure_value`: array or pandas series containing closing prices
-    - `timeperiod`: period over which to calculate the sma
+    - `short_sma_timeperiod`: period over which to calculate the sma shorter
+    - `long_sma_timeperiod`: period over which to calculate the sma longer
     -----------------------------------------------------------------
     return: None
     """

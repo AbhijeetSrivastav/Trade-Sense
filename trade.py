@@ -54,7 +54,9 @@ class IndicatorRSI:
 
         self.BUY_THRESHOLD = 30
         self.SELL_THRESHOLD = 70
-    
+
+    def cal_suggestions(self):
+        "Calculate suggestions"
         self.rsi = ta.RSI(real=self.closure_value, timeperiod=self.period)
 
         for i in range(len(self.closure_value)):
@@ -66,6 +68,8 @@ class IndicatorRSI:
                 self.suggestions.append('SELL')
             else:
                 self.suggestions.append('HOLD')
+        
+        return self.suggestions, self.rsi
 
 
 class IndicatorMACD:
@@ -230,22 +234,19 @@ class GenerateAlert:
     return: alerts
     """
 
-    def __init__(self, indicator: str, indicator_suggestions: list, historical_data: pd.DataFrame, symbol: str, debug: bool = False) -> str:
+    def __init__(self, indicator: str, indicator_suggestions: list, indicator_values: list, historical_data: pd.DataFrame, symbol: str, debug: bool = False) -> str:
         self.indicator = indicator
         self.indicator_suggestions = indicator_suggestions
+        self.indicator_values = indicator_values
         self.historical_data = historical_data
         self.symbol = symbol
         self.alerts = []
 
-        for suggestion, date in zip(self.indicator_suggestions, self.historical_data["Date"].strftime("%Y=-%m-%d")):
+        for suggestion, date, indicator_value in zip(self.indicator_suggestions,[self.historical_data["Close"].index[i].strftime("%Y-%m-%d") for i in range(len(self.indicator_values))], self.indicator_values):
             message = "Signal: {0} | Indicator: {1} | Indicator Value: {2} On Date: {3}".format(suggestion, self.indicator, indicator_value, date)
             
             self.alerts.append(message)
         
-       
-               
-        return self.alerts
-
 
 class PushAlert:
     """

@@ -5,6 +5,8 @@ from trade import IndicatorMACD
 from trade import IndicatorSTOCH
 from trade import IndicatorSMA
 from trade import IndicatorEMA
+from trade import GenerateAlert
+from trade import PushAlert
 
 # CONFIGURABLE PARAMETERS
 SYMBOL = 'TATAMOTORS.NS'
@@ -40,4 +42,9 @@ sma_values = IndicatorSMA(closure_value=closure_values, timeperiod=TIMEPERIOD).s
 
 #>> EMA
 ema_values = IndicatorEMA(closure_value=closure_values, timeperiod=TIMEPERIOD).ema
+
+# Dummy
+alert_messages = GenerateAlert(indicator='RSI', indicator_values=rsi_values, historical_data=historical_data, symbol=SYMBOL, debug=False).alert_messages
+
+PushAlert(alert_messages=alert_messages).pushConsole()
 

@@ -36,5 +36,20 @@ class DataFetcher:
         return data["Close"]
 
 
+class IndicatorRSI:
+    """
+    Relative Strength Index Indicator
+    -----------------------------------------------------------------
+    input:
+    - `closure_value`: array or pandas series containing closing prices
+    - `timeperiod`: period over which to calculate the ema
+    -----------------------------------------------------------------
+    return: Pandas Series containing RSA values
+    """
 
+    def __init__(self, closure_value: pd.DataFrame, period: str) -> pd.Series:
+        self.closure_value = closure_value
+        self.period = period
+    
+        return ta.RSI(real=self.closure_value, timeperiod=self.period)
   

@@ -1,7 +1,7 @@
 
 from trade import DataFetcher
 from trade import IndicatorRSI
-
+from trade import IndicatorMACD
 
 # CONFIGURABLE PARAMETERS
 SYMBOL = 'TATAMOTORS.NS'
@@ -26,6 +26,8 @@ historical_data, closure_values = DataFetcher(symbol=SYMBOL, period=PERIOD_FOR_D
 # >> RSI
 rsi_values = IndicatorRSI(closure_value=closure_values, period=PERIOD_FOR_CALCULATION).rsi
 
+#>> MACD
+macd_values = IndicatorMACD(closure_value=closure_values, fastperiod=FAST_PERIOD, slowperiod=SLOW_PERIOD, signalperiod=SIGNAL_PERIOD).macd
 
 
 
